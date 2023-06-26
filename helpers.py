@@ -16,6 +16,7 @@ def getMaxCount(students, cType):
             maxCount = int(student[cType])
 
     #print(f"maxCount: {maxCount}") 
+    # Did this get saved?
     return maxCount
 
 def getMinCount(students, cType):
