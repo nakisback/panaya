@@ -10,9 +10,9 @@
 #TODO: (30/5/23): Look up countdown fonts on https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
 #TODO: (3/6/23): Print out the current RSD% average for a specific quiz or range of quizzes
 #TODO: (3/6/23): ^Apply this to all classes
-#TODO: (8/6/23): Fix bookPasser to be half-boy/half-girl
 #TODO: (19/6/23): Make Student model
 #TODO: (20/6/23): Make statistics program
+#TODO: (26/6): Make assigning group names optional
 # Did this get saved?
 
 #IDEAS:
@@ -176,7 +176,7 @@ def nicePrint(List):
         print(List[i]['Name'] + ' -- ' + List[i]['Gender'])
 
 def directoryInfo():
-    cwd
+    
     __file__
     __location__
     return

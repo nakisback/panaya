@@ -1,12 +1,40 @@
-import time
+import time, shutil
 
-
+HEIGHT = shutil.get_terminal_size()[1]
 
 def textDisplay():
     print('textDisplay.py')
     return
 
+def countdown(num):
+    print('Are you ready kids?')
+    time.sleep(2)
+    print('Aye! Aye! Captain!')
+    time.sleep(2)
+    print('OHHHHHHHHHHHHHHHH!!!!!!!!!')
+    time.sleep(3)
 
+    for i in range(num, -1, -1):
+        time.sleep(0.5)
+        starMaker(i)
+    time.sleep(0.5)
+    return
+
+def bookCountdown():
+
+    print('\n' * int(HEIGHT/2))
+    print('***********************************************************')
+    print('***********************************************************')
+    print('Eenie, meenie, miney, mo...')
+    time.sleep(2)
+    print('Catch a tiger by its toe...')
+    print('***********************************************************')
+    print('***********************************************************')
+    time.sleep(2)
+    #print('\n' * HEIGHT)
+
+
+    return
 
 def starMaker(cdNum):
     star = """

@@ -32,7 +32,7 @@ def getMinCount(students, cType):
     return minCount
 
 def generateNotCalled(students, cType):
-    print('generateNotCalled')
+    #print('generateNotCalled')
     notCalled = {}
     minCount = getMinCount(students, cType)
     maxCount = getMaxCount(students, cType)
@@ -44,10 +44,10 @@ def generateNotCalled(students, cType):
         countKey = int(student[cType])
         notCalled[countKey].append(student)
 
-    for k, vList in notCalled.items():
+    '''for k, vList in notCalled.items():
         print(f"len({k}): {len(vList)}")
 
-    print('Did generateNotCalled do the thing with asdf?')
+    print('Did generateNotCalled do the thing with asdf?')'''
     return notCalled
 
 
