@@ -13,12 +13,13 @@
 #TODO: (19/6/23): Make Student model
 #TODO: (20/6/23): Make statistics program
 #TODO: (26/6): Make assigning group names optional
+#TODO: (27/6): Make a standard time variable that can be switched on and off
 # Did this get saved?
 
 #IDEAS:
 # 1. <to be> question maker -- Picks a random student, picks a random topic
 
-import os, sys, random, time, csv, shutil
+import os, sys, random, time, csv, shutil, display
 import callers
 from groups import groupsMaker
 
@@ -31,15 +32,13 @@ OPTIONS = {('1', 'QUESTIONS'): 'questions',
            ('4', 'VOLUNTEERS'): 'doing whatever is needed',
            ('5', 'GROUPS'): 'dividing class into groups',
            ('6', 'JEOPARDY'): 'playing Jeopardy',
-           ('7', 'PRINT'): '<<TODO: printing student info>>',
+           ('7', 'TEST'): '<<TODO: printing student info>>',
            ('8', 'RESET'): '<<TODO: resetting student counts>>'}
 CLASSES = ['1', '2', '3', '4', '5']
 FILENAME = ''
 HEIGHT = shutil.get_terminal_size()[1]
 
 def main():
-    #print('\n' * HEIGHT)
-    #print('HEIGHT: ' + str(HEIGHT))
     os.system('cls')
 
     students = []
@@ -101,7 +100,6 @@ def main():
                     break
                 else:
                     prompt = 'Number of Students: '
-                #callers.spongebobMaker()
                 response = input(prompt)
                 if response.isnumeric() == True and int(response) > 0:
                     num = int(response)
@@ -121,6 +119,8 @@ def main():
             # Fix this
             elif choice[1] == 'GROUPS':
                 groupsMaker(students)
+            elif choice[1] == 'TEST':
+                display.displayPrompt('hello', options=OPTIONS)
         except ValueError:
             print("Student counts have not been assigned...")
             
@@ -182,11 +182,6 @@ def directoryInfo():
     __file__
     __location__
     return
-
-#TODO: 
-# Counts # per gender, # that haven't been called yet this round
-#def classStats():
-    
 
 
 if __name__ == "__main__":

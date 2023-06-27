@@ -42,10 +42,9 @@ def bookCountdown():
 
 def displayGroups(groups):
     #print('This is displayGroups...')
-    for i, group in enumerate(groups):
+    for group in groups:
         #print(f"Group {group['name']} Roster")
         #print(group['roster'])
-        count = 0
         #time.sleep(3)
         header = ' ' + group['name'] + ' (' + str(len(group['roster'])) + ' ppl.) '
         print(header.center(60, '='))
@@ -65,7 +64,16 @@ def displayGroups(groups):
 def displayStudentInfo():
     return
 
+def displayPrompt(string, **options):
+    print(string)
 
+    print(options)
+    print('asdf')
+    for arg in options.values():
+        for k, v in arg:
+            print(k, v)
+
+    return
 
 
 def starMaker(cdNum):
