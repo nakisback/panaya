@@ -6,6 +6,9 @@ def textDisplay():
     print('textDisplay.py')
     return
 
+def getTerminalSize():
+    print(shutil.get_terminal_size())
+
 def countdown(num):
     print('Are you ready kids?')
     time.sleep(2)
@@ -35,6 +38,35 @@ def bookCountdown():
 
 
     return
+
+
+def displayGroups(groups):
+    #print('This is displayGroups...')
+    for i, group in enumerate(groups):
+        #print(f"Group {group['name']} Roster")
+        #print(group['roster'])
+        count = 0
+        #time.sleep(3)
+        header = ' ' + group['name'] + ' (' + str(len(group['roster'])) + ' ppl.) '
+        print(header.center(60, '='))
+        string = ' '
+        for i, student in enumerate(group['roster']):
+            studentInfo = student['Name'] + ' (# ' + str(student['#']) + ')'
+            if student != group['roster'][-1]:
+                studentInfo += ', '
+            else:
+                studentInfo += '\n'
+            if i % 4 == 0 and i != 0:
+                string += '\n '
+            string += studentInfo
+
+        print(string)
+
+def displayStudentInfo():
+    return
+
+
+
 
 def starMaker(cdNum):
     star = """

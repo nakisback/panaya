@@ -20,6 +20,7 @@
 
 import os, sys, random, time, csv, shutil
 import callers
+from groups import groupsMaker
 
 script_dir = os.path.dirname('namePicker.py')
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -97,7 +98,7 @@ def main():
                 if choice[1] == 'JEOPARDY':
                     prompt = 'Number of Questions: '
                 elif choice[1] == 'GROUPS':
-                    prompt = 'Number of Groups: '
+                    break
                 else:
                     prompt = 'Number of Students: '
                 #callers.spongebobMaker()
@@ -117,8 +118,9 @@ def main():
                 callers.bookPasser(path, students, num, choice[1], OPTIONS[choice])
             elif choice[1] == 'JEOPARDY':
                 callers.groupQuestions(path, students, num)
+            # Fix this
             elif choice[1] == 'GROUPS':
-                groups = callers.groupsMaker(students, num)
+                groupsMaker(students)
         except ValueError:
             print("Student counts have not been assigned...")
             

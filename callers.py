@@ -3,7 +3,7 @@
 # bookPasser(students, num, choice, text)
 # groupQuestions(students, num)
 
-import time, random, os, csv, sys, shutil, keyboard
+import time, random, os, csv, sys, shutil, keyboard, groups
 import display
 from tempfile import NamedTemporaryFile
 from helpers import getNotCalled, generateNotCalled, getNotCalledThisRound, getIndexFromID
@@ -121,7 +121,7 @@ def groupQuestions(path, students, num):
     #numGroups = int(input('Number of Groups: '))
     # dividedBy: gender, odds/evens, sectioned, random
     #grps = groupsMaker(students, numGroups, dividedBy='gender')
-    grps = groupsMaker(students)
+    grps = groups.groupsMaker(students)
 
     #for i, grp in enumerate(grps):
     #    print(f"Group {i+1}: \n{grp}")
@@ -147,7 +147,7 @@ def groupQuestions(path, students, num):
             #print('New Group')
             #print(grp)
             ind = round % len(grp['roster'])
-            teamName = 'T' + str(grp['name'])
+            teamName = str(grp['name'])
             #print("grp['roster'][0]['Name']")
             #print(grp['roster'][0]['Name'])
             response = input(f"  Q{qNum+1}. {teamName} - {grp['roster'][ind]['Name']} (#{grp['roster'][ind]['#']})")
@@ -166,163 +166,11 @@ def groupQuestions(path, students, num):
     
     print()
 
-def groupsMaker(students):
-    break_out_flag = False
-    
-    # dividedBy: gender, odds/evens, sectioned, random, every nth student
-    OPTIONS = {'1': 'GENDERS',
-               '2': 'ODDS/EVENS',
-               '3': 'SECTIONS',
-               '4': 'RANDOM GROUPS',
-               '5': 'EVERY NTH STUDENT'}
-    
-    #random.shuffle(students)
-    groups = []
-
-    print('How should the groups be divided?')
-    while True:
-        for key, value in OPTIONS.items():
-            print("  %s. %s" % (key, value))
-
-        response = input('>>> ')
-
-        if response in OPTIONS:
-            dividedBy = OPTIONS[response]
-            break
-        else:
-            print('Incorrect input...')
-
-    print ('\n')
-    if dividedBy == "GENDERS" or dividedBy == "ODDS/EVENS":
-        numGroups = 2
-    else:
-        numGroups = int(input('How many groups are there? '))
-
-    time.sleep(2)
-    print('\n\n')
-    
-    for i in range(numGroups):
-        groups.append({})
-
-    # dividedBy: genders
-    if dividedBy == 'GENDERS':
-        for student in students:
-            if student['Gender'] == 'boy':
-                if len(groups[0]) == 0:
-                    groups[0]['name'] = 'BOYS'
-                    groups[0]['roster'] = []
-                groups[0]['roster'].append(student)
-            elif student['Gender'] == 'girl':
-                if len(groups[1]) == 0:
-                    groups[1]['name'] = 'GIRLS'
-                    groups[1]['roster'] = []
-                groups[1]['roster'].append(student)
-
-    # dividedBy: odds/evens
-    if dividedBy == 'ODDS/EVENS':
-        for student in students:
-            if (int(student['#']) % 2) != 0:
-                if len(groups[0]) == 0:
-                    groups[0]['name'] = 'ODDS'
-                    groups[0]['roster'] = []
-                groups[0]['roster'].append(student)
-            else:
-                if len(groups[1]) == 0:
-                    groups[1]['name'] = 'EVENS'
-                    groups[1]['roster'] = []
-                groups[1]['roster'].append(student)
-
-    # dividedBy: sections
-    if dividedBy == 'SECTIONS':
-        numPerSection = []
-        groupInd = 0
-        baseNumStud = len(students) // numGroups
-        remNumStud = len(students) % numGroups
-
-        for i in range(numGroups):
-            numPerSection.append(baseNumStud)
-            groups[i]['name'] = str(i + 1)
-            groups[i]['roster'] = []
-
-        while True:
-            i = 0
-            if remNumStud != 0:
-                numPerSection[i] += 1
-                remNumStud -= 1
-                i += 1
-            else:
-                break
-
-        groupInd = 0
-        for student in students:
-            if len(groups[groupInd]['roster']) < numPerSection[groupInd]:
-                groups[groupInd]['roster'].append(student)
-                #print(f"{len(groups[groupInd])}. {student['Name']} ({student['#']})")
-            else:
-                groupInd += 1
-                groups[groupInd]['roster'].append(student)
-                #print('Moving onto group ' + str(groupInd))
-                #print(f"{len(groups[groupInd])}. {student['Name']} ({student['#']})")
-
-        
-    # dividedBy: random groups
-    if dividedBy == 'RANDOM GROUPS':
-        while len(students) >= 1:
-            if break_out_flag == True:
-                break
-            for i, group in enumerate(groups):
-                if len(group) == 0:
-                    group['name'] = str(i+1)
-                    group['roster'] = []
-                randStud = random.choice(students)
-                group['roster'].append(randStud)
-                #print(f"{randStud['Name']} is going to group {i+1}")
-                students.pop(getIndexFromID(students, randStud['id']))
-                if len(students) == 0:
-                    break_out_flag = True
-                    break
-    
-    # dividedBy: every Nth student
-    if dividedBy == 'EVERY NTH STUDENT':
-        while True:
-            i = 0
-            for student in students:
-                if len(groups[i]) == 0:
-                    groups[i]['name'] = str(i+1)
-                    groups[i]['roster'] = []
-                groups[i]['roster'].append(student)
-                if i < len(groups)-1:
-                    i += 1
-                else:
-                    i = 0
-            break
-
-    # Displays students in each group
-    #print(groups)
-    for i, group in enumerate(groups):
-        #print(f"Group {group['name']} Roster")
-        #print(group['roster'])
-        count = 0
-        #time.sleep(3)
-        print(f"Group {group['name']} ({len(group['roster'])} ppl.): ")
-        for student in group['roster']:
-            if count < 4:
-                count += 1
-                print(f"{student['Name']} (#{student['#']})", end='')
-            else:
-                count = 1
-                print(f"\n{student['Name']} (#{student['#']})", end='')
-            if student != group['roster'][-1]:
-                print(', ', end='')
-        print('\n')
-        
-    return groups
-
 def updateCSVfile(path, totalCalled, cType, **kwargs):
     print('\n' * 3)
     for i in range(3):
         time.sleep(0.5)
-        print('.\n\n')
+        print('.\n')
     time.sleep(1)
         
     print('These students need to be updated:')
