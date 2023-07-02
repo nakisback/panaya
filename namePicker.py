@@ -120,7 +120,7 @@ def main():
             elif choice[1] == 'GROUPS':
                 groupsMaker(students)
             elif choice[1] == 'TEST':
-                display.displayPrompt('hello', options=OPTIONS)
+                display.optionsPrompt('hello', options=OPTIONS)
         except ValueError:
             print("Student counts have not been assigned...")
             

@@ -1,6 +1,7 @@
 import time, shutil
 
-HEIGHT = shutil.get_terminal_size()[1]
+WIDTH = shutil.get_terminal_size()[0] - 1
+HEIGHT = shutil.get_terminal_size()[1] - 5
 
 def textDisplay():
     print('textDisplay.py')
@@ -64,7 +65,7 @@ def displayGroups(groups):
 def displayStudentInfo():
     return
 
-def displayPrompt(string, **options):
+def optionsPrompt(string, **options):
     print(string)
 
     print(options)
@@ -73,8 +74,36 @@ def displayPrompt(string, **options):
         for k, v in arg:
             print(k, v)
 
+    input('>>>')
     return
 
+def displayString(string):
+    blockWidth = WIDTH
+    blockHeight = HEIGHT
+    numCharInBlockWall = 2
+    stringBoxWidth = WIDTH - (numCharInBlockWall * 2)
+    stringBoxHeight = HEIGHT - (numCharInBlockWall * 2)
+    isEven = False
+    isEvenSubtract = 1
+
+    if stringBoxHeight % 2 == 0:
+        isEven = True
+        isEvenSubtract = 0
+
+    for i in range(numCharInBlockWall):
+        print('#' * blockWidth)
+
+    for i in range(stringBoxHeight):
+        if (stringBoxHeight-isEvenSubtract) / 2 == i:
+            print('#' * numCharInBlockWall, end='')
+            print(string.center(stringBoxWidth, ' '), end='')
+            print('#' * numCharInBlockWall)
+        else:
+            row = '#' * numCharInBlockWall + ' ' * stringBoxWidth + '#' * numCharInBlockWall
+        print(row)
+
+    for i in range(numCharInBlockWall):
+        print('#' * blockWidth)
 
 def starMaker(cdNum):
     star = """
