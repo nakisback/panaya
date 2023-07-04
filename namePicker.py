@@ -14,6 +14,8 @@
 #TODO: (20/6/23): Make statistics program
 #TODO: (26/6): Make assigning group names optional
 #TODO: (27/6): Make a standard time variable that can be switched on and off
+
+#TODO: Account for absent students
 # Did this get saved?
 
 #IDEAS:

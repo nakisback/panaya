@@ -8,15 +8,31 @@ ADJECTIVES = {'color': ['red','orange','yellow','green','blue','purple','black',
 
 PREDICATES = {'verb': ['run', 'jump', 'play', 'eat', 'bark', 'meow', 'dance','drink','listen','wait','sleep','smell']}
 
+THAI_NAMES = {}
+
 def main():
     #print(SUBJECTS)
+    
+    sentences = []
+    #response = int(input('How many sentences? '))
+
+    '''for i in range(response):
+        sentence = generateSentence()
+        sentences.append(sentence)'''
+
+    sentence = generateSentence()
+
+    display.displayString(sentence)
+    #print(sentence)
+    #print(sentence)
+
+def generateSentence():
     subject = generateSubject()
     predicate = generatePredicate(subject)
     sentence = subject + ' ' + predicate
     sentence = fixGrammar(sentence)
-
-    display.displayString(sentence)
-    #print(sentence)
+    
+    return sentence
 
 def generateSubject():
     subject = ''
@@ -59,6 +75,5 @@ def fixGrammar(sentence):
 
     return sentence
     
-
 if __name__ == "__main__":
     main()
