@@ -1,12 +1,12 @@
 import random, display
 
 SUBJECTS = {'article': ['a ', 'an ', 'the ', ''],
-            'animal': ['dog', 'cat', 'bird','iguana', 'fish', 'monkey']}
+            'animal': ['dog', 'cat', 'bird','iguana', 'panda', 'shark', 'rabbit', 'fish', 'monkey', 'snake', 'elephant', 'buffalo', 'cayman']}
 
 ADJECTIVES = {'color': ['red','orange','yellow','green','blue','purple','black','white','pink'],
               'size': ['big', 'huge', 'large', 'little', 'small','short']}
 
-PREDICATES = {'verb': ['run', 'jump', 'play', 'eat', 'bark', 'meow', 'dance','drink','listen','wait','sleep','smell']}
+PREDICATES = {'verb': ['run','climb', 'jump','slither', 'play', 'eat', 'bark', 'meow', 'dance','drink','listen','wait','sleep','smell', 'smile', 'walk', 'jog','swim']}
 
 THAI_NAMES = {}
 
@@ -20,9 +20,13 @@ def main():
         sentence = generateSentence()
         sentences.append(sentence)'''
 
-    sentence = generateSentence()
+    sentence, subject = generateSentence()
 
     display.displayString(sentence)
+    print("Complete Subject:  ", end='')
+    input()
+    print('   ' + subject.capitalize())
+
     #print(sentence)
     #print(sentence)
 
@@ -31,8 +35,9 @@ def generateSentence():
     predicate = generatePredicate(subject)
     sentence = subject + ' ' + predicate
     sentence = fixGrammar(sentence)
+
     
-    return sentence
+    return sentence, subject
 
 def generateSubject():
     subject = ''
