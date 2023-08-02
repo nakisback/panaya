@@ -1,14 +1,53 @@
-import random, display
+#TODO: (4/7/23): Call random students, assign to sentence
+#TODO: Make USED_WORDS list
+#TODO: Assign students to sentences
 
-SUBJECTS = {'article': ['a ', 'an ', 'the ', ''],
-            'animal': ['dog', 'cat', 'bird','iguana', 'panda', 'shark', 'rabbit', 'fish', 'monkey', 'snake', 'elephant', 'buffalo', 'cayman']}
+#TODO: Fix "Fish eats."
+
+
+import random, display, helpers
+
+SUBJECTS = {'article': ['a ', 'an ', 'the ',''],
+            'animal': ['alligator', 'ant', 
+                       'bird', 'buffalo', 
+                       'cat', 'cayman',
+                       'dinosaur', 'dog', 'dolphin', 'dragon',
+                       'elephant',
+                       'flamingo', 'frog',
+                       'hedgehog', 'hippo',
+                       'iguana',
+                       'lion',
+                       'monkey',
+                       'panda', 'parrot',
+                       'rabbit',
+                       'sea urchin', 'shark', 'sloth', 'snake', 'squid', 'squirrel',
+                       'tiger', 'turtle',
+                       'whale']}
 
 ADJECTIVES = {'color': ['red','orange','yellow','green','blue','purple','black','white','pink'],
               'size': ['big', 'huge', 'large', 'little', 'small','short']}
 
-PREDICATES = {'verb': ['run','climb', 'jump','slither', 'play', 'eat', 'bark', 'meow', 'dance','drink','listen','wait','sleep','smell', 'smile', 'walk', 'jog','swim']}
+#TODO: Add -y words
+
+PREDICATES = {'verb': ['bark', 
+                       'climb', 
+                       'dance', 'draw', 'drink', 
+                       'eat', 
+                       'fight', 
+                       'jump', 'jog', 
+                       'listen', 
+                       'meow', 
+                       'play', 
+                       'run', 
+                       'sit', 'sleep', 'slither', 'smell', 'smile', 'swim', 
+                       'think', 
+                       'wait', 'walk']}
+
+ADVERBS = {'sound': ['loudly','quietly'],
+           'speed': ['quickly', 'slowly']}
 
 THAI_NAMES = {}
+
 
 def main():
     #print(SUBJECTS)
@@ -18,26 +57,37 @@ def main():
 
     '''for i in range(response):
         sentence = generateSentence()
-        sentences.append(sentence)'''
+        sentences.append(sentence)
 
-    sentence, subject = generateSentence()
+    
+    for i in range(10):
+        sentence, subject = generateSentence()
+        print(f"{i+1}. {sentence}")'''
+    
+    #className = 'G2-5.csv'
+    #callQueue = helpers.getCallQueue()
 
-    display.displayString(sentence)
-    print("Complete Subject:  ", end='')
-    input()
-    print('   ' + subject.capitalize())
+    sentence, subject, predicate = generateSentence()
+    #stringBox = [sentence, '', '', 'Complete Predicate:  _____________________']
+    stringBox = [sentence, '', 'Complete Subject:  _____________________', 'Complete Predicate:  _____________________']
+    display.displaySentence(stringBox)
+    input("Press ENTER to see the Complete Subject. . . ")
+    stringBox[2] = "Complete Subject:  " + subject
+    display.displaySentence(stringBox)
+    input("Press ENTER to see the Complete Predicate. . . ")
+    stringBox[3] = "Complete Predicate:  " + predicate
+    display.displaySentence(stringBox)
 
     #print(sentence)
     #print(sentence)
 
 def generateSentence():
-    subject = generateSubject()
-    predicate = generatePredicate(subject)
+    subject = generateSubject().capitalize()
+    predicate = generatePredicate(subject) + '.'
     sentence = subject + ' ' + predicate
-    sentence = fixGrammar(sentence)
 
     
-    return sentence, subject
+    return sentence, subject, predicate
 
 def generateSubject():
     subject = ''
@@ -67,9 +117,22 @@ def generateSubject():
     return subject
     
 def generatePredicate(subject):
-    predicate = random.choice(PREDICATES['verb'])
+    adv = ''
+    verb = random.choice(PREDICATES['verb'])
+
     if subject.endswith('s') == False and subject != 'fish':
-        predicate += 's'
+        verb += 's'
+
+    if random.random() > 0.5:
+        advList = random.choice(list(ADVERBS.values()))
+        if random.random() > 0.5:
+            adv = random.choice(advList) + ' '
+            predicate = adv + verb
+        else:
+            adv = ' ' + random.choice(advList)
+            predicate = verb + adv
+    else:
+        predicate = verb
 
     return predicate
 

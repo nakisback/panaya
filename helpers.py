@@ -4,6 +4,8 @@
 # getNotCalledThisRound(students, calledThisRound)
 # getIndexFromID(List, ID)
 
+import random
+
 
 # Returns the max amount of times a student has been called for a category
 # TODO: filter by category
@@ -12,68 +14,55 @@ def getMaxCount(students, cType):
     maxCount = 0
 
     for student in students:
-        if maxCount < int(student[cType]):
-            maxCount = int(student[cType])
+        if int(maxCount) < int(getattr(student, cType)):
+            maxCount = getattr(student, cType)
 
     #print(f"maxCount: {maxCount}") 
-    # Did this get saved?
-    return maxCount
+    return int(maxCount)
 
 def getMinCount(students, cType):
     minCount = None
+    #print(cType)
+    #print(students)
 
     for student in students:
-        #print(f"{student['Name']} {cType}: {student[cType]}")
+        '''print(student)
+        print(student.bCount)
+        print(getattr(student, cType))'''
         if minCount == None:
-            minCount = int(student[cType])
-        elif int(student[cType]) < minCount:
-            minCount = int(student[cType])
+            #print(student.name * 10)
+            minCount = getattr(student, cType)
 
-    return minCount
+        elif getattr(student, cType) < minCount:
+            minCount = getattr(student, cType)
 
-def generateNotCalled(students, cType):
+    return int(minCount)
+
+# Returns a dictionary where the keys are counts and the values are shuffled lists of students who have those specific counts
+def getCallQueue(students, cType):
     #print('generateNotCalled')
-    notCalled = {}
+    callQueue = {}
     minCount = getMinCount(students, cType)
     maxCount = getMaxCount(students, cType)
 
     for count in range(minCount, maxCount+1):
-        notCalled[count] = []
+        callQueue[count] = []
 
     for student in students:
-        countKey = int(student[cType])
-        notCalled[countKey].append(student)
+        #countKey = int(student[cType])
+        countKey = int(getattr(student, cType))
+        callQueue[countKey].append(student)
 
-    '''for k, vList in notCalled.items():
-        print(f"len({k}): {len(vList)}")
+    for k, vList in callQueue.items():
+        #print(f"len({k}): {len(vList)}")
+        random.shuffle(vList)
+        #print(vList)
 
-    print('Did generateNotCalled do the thing with asdf?')'''
-    return notCalled
+    #print('Did allQueue do the thing with asdf?')
+    #print('printing callQueue')
+    #print(callQueue)
+    return callQueue
 
-
-# A list of students is passed to this function
-# Returns a list of students who have not reached the class's maxCount yet
-# TODO: Two lists should be passed and maybe a classname
-#       (1st: A ref list, 2nd: A list of those already called)
-def getNotCalled(students, cType):
-    maxCount = getMaxCount(students, cType)
-    minCount = getMinCount(students, cType)
-    notCalled = []
-
-    for student in students:
-        if int(student[cType]) == minCount:
-            notCalled.append(student)
-
-
-    # If everyone has the same maxCount, notCalled gets populated with all
-    # students effectively starting a 'new round' for the class. 
-    if len(notCalled) == 0:
-        for student in students:
-            notCalled.append(student)
-    '''print('getNotCalled function\nnotCalled: ')
-    print(notCalled)
-    print('len(notCalled): ' + str(len(notCalled)))'''
-    return notCalled
 
 # Each student should be picked only once per 'round'
 # Returns a list of students who haven't been called 'this round'
@@ -100,6 +89,6 @@ def getIndexFromID(List, ID):
     if ID == '' or ID == None:
         raise Exception('getIndexFromID: Student does not have a valid id...')
     for i in range(len(List)):
-        if str(ID) == str(List[i]['id']):
+        if str(ID) == str(List[i].id):
             index = i
     return index
